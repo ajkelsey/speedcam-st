@@ -1,0 +1,63 @@
+{
+    "street_name": "",
+    "inbound": "East",
+    "outbound": "West",
+    "lat": 00000,
+    "lon": 00000,
+    "timezone": "America/New_York",
+
+    "inbound_correction": "-2",
+    "outbound_correction": "-2",
+    "angle2street": "-32",
+    "angle2ground": "-6",
+
+    "min_speed_report": "20",
+    "min_speed_post": "32",
+    "speed_units": "mph",
+
+    "camera_facility": "1",
+    "resolution_x": "1920",
+    "resolution_y": "1080",
+    "cam_pre_record": "3",
+    "cam_post_record": "3",
+
+    "case_fans": "1",
+    "on_temp": "35",
+    "post_to_facebook": "1",
+    "vpn": "0",
+    "logging_level": "DEBUG",
+    
+    "facebook":
+        {
+            "userid": "",
+            "user_token": "",
+            "page_token": "",
+            "pageid": ""
+        },
+
+    "radar": 
+        {
+            "device_path": "/dev/serial/by-id/usb-Infineon_IFX_CDC-if00",
+            "settings":
+            {
+                "velocity_units": "US",
+                "range_units": "uF",
+                "json_mode": "OJ",
+                "doppler_units_report": "Ou",
+                "fmcw_units_report": "ou",
+                "speed_report": "OS",
+                "range_report": "Od",
+                "range_and_speed": "Oy",
+                "directon_reporting": "R|",
+                "min_speed_report": "R>0",
+                "max_speed_report": "R<120",
+                "min_speed_magnitude": "M>20",
+                "peak_speed_average": "K+",
+                "range_low_magnitude": "m>0",
+                "min_range_report": "r>0",
+                "max_range_report": "r<1000",
+                "inbound_cosine_err": "^/+34.0",
+                "outbound_cosine_err": "^/-34.0"
+            }
+        }
+}
