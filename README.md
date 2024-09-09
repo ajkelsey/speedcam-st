@@ -63,6 +63,7 @@ From root, unzip speedcamera.zip.</br>
     └── speedcam - Speedcam root directory
         ├── data - CSV file.
         ├── http - Used by ffmpeg_streamer.py and contains index.html.
+        ├── imageq - Image persistent file queue.
         ├── images - Images of speeding cars.
         ├── log - Log files.
         ├── video - Video files to be processed.
