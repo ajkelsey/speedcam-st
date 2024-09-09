@@ -3,7 +3,6 @@
 # Ignore
 __pycache__/
 data/
-http/
 imageq/
 images/
 log/
@@ -18,6 +17,9 @@ speedcam.code-workspace
 *.zip
 yolo*.pt
 
-# Include
-!http/index.html.sample
+# Ignores all but the sample html in http/
+http/*.m3u8
+http/*.html
+http/*.ts
+
 
