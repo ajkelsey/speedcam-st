@@ -1,0 +1,10 @@
+[Unit]
+Description=Case Fans
+
+[Service]
+User=speedcam
+WorkingDirectory=/opt/speedcam
+ExecStart=/opt/speedcam/case_fans.py
+
+[Install]
+WantedBy=default.target

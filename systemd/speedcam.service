@@ -1,0 +1,10 @@
+[Unit]
+Description=Speed Camera
+
+[Service]
+User=speedcam
+WorkingDirectory=/opt/speedcam
+ExecStart=/opt/speedcam/speedcam.py
+
+[Install]
+WantedBy=default.target
