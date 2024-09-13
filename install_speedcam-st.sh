@@ -39,7 +39,7 @@ for directory in "${path_array[@]}"; do
         continue
     else 
         echo "Creating ${root)${directory}..."
-        mkdir ${root)${directory}
+        mkdir ${root}${directory}
     fi
 done
 
@@ -70,3 +70,4 @@ pip install ultralytics --break-system-packages
 echo -e "\n\n
 For new installations, edit speedcam-config.json.sample and save it to speedcam-config.json
 "
+
