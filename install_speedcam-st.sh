@@ -34,7 +34,7 @@ path_array=("${root}/data" "${root}/http" "${root}/imageq" "${root}/images" "${r
 
 # Create directory structure
 for directory in "${path_array[@]}"; do
-
+    if [ -d $directory ]; then
         echo "Found ${root)${directory}..."
         continue
     else 
@@ -62,7 +62,7 @@ ln -s ${root}/systemd/speedcam.service ${srv_path}/speedcam.service
 ln -s ${root}/systemd/case_fans.service ${srv_path}/case_fans.service
 
 # Install python dependencies
-echo 'Installing python dependencies...
+echo 'Installing python dependencies...'
 sudo apt update -y && sudo apt install python-apscheduler python3-matplotlib python3-matplotlib \
 python3-pandas python3-persist-queue python3-rich
 pip install ultralytics --break-system-packages
