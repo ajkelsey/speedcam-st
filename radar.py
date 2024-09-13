@@ -115,7 +115,6 @@ def get_speed(config):
         vehicle.speed = vehicle_speed / len(avg_speed)
         
         # Determines direction of travel and converts negative speed to positive.
-        vehicle.speed = round(abs(vehicle.speed), 1)
 
         if vehicle.speed > 0:
             vehicle.direction = config['inbound']
@@ -124,8 +123,8 @@ def get_speed(config):
         else:
             vehicle.direction = config['outbound']
             # Applies outbound speed correction.
-            vehicle.speed = vehicle.speed + float(config['outbound_correction'])
-
+            vehicle.speed = vehicle.speed - float(config['outbound_correction'])
+        vehicle.speed = round(abs(vehicle.speed), 1)
         radar_logger.debug(f'Average speed: {vehicle.speed}')
 
     return vehicle, filename
