@@ -67,7 +67,4 @@ sudo apt update -y && sudo apt install python-apscheduler python3-matplotlib pyt
 python3-pandas python3-persist-queue python3-rich
 pip install ultralytics --break-system-packages
 
-echo -e "\n\n
-For new installations, edit speedcam-config.json.sample and save it to speedcam-config.json
-"
-
+echo -e "\n\nFor new installations, edit speedcam-config.json.sample and save it to speedcam-config.json"
