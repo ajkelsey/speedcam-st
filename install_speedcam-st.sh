@@ -34,12 +34,12 @@ path_array=("${root}/data" "${root}/http" "${root}/imageq" "${root}/images" "${r
 
 # Create directory structure
 for directory in "${path_array[@]}"; do
-    if [ -d $directory ]; then
-        echo "Found ${root)${directory}..."
+    if [ -d "$directory" ]; then
+        echo "Found ${root}${directory}..."
         continue
     else 
-        echo "Creating ${root)${directory}..."
-        mkdir ${root}${directory}
+        echo "Creating ${root}${directory}..."
+        mkdir "${root}${directory}"
     fi
 done
 
@@ -50,9 +50,9 @@ file_array=("LICENSE" "README.md" "alpr.py" "camera.py" "case_fans.py" "data.py"
             "http/index.html.sample" "systemd/case_fans.service" "systemd/speedcam.service")
 
 # Download files from Github
-for file in ${file_array[@]}; do
+for file in "${file_array[@]}"; do
     echo "Downloading ${file}..."
-    wget -O ${file} ${url}${file}
+    wget -O "${file}" "${url}${file}"
 done
 
 # Create symbolic links to .service files
