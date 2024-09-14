@@ -27,20 +27,22 @@ echo "SpeedcamST Copyright (C) 2024  Andrew Kelsey"
 echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
 echo "under certain conditions; type 'cat LICENSE' for details."
+echo -e "\n"
 
+user=$(whoami)
 root='/opt/speedcam'
-path_array=("${root}/data" "${root}/http" "${root}/imageq" "${root}/images" "${root}/log" \
+path_array=("${root}" "${root}/data" "${root}/http" "${root}/imageq" "${root}/images" "${root}/log" \
             "${root}/video" "${root}/videoq")
 
 # Create directory structure
 for directory in "${path_array[@]}"; do
     if [ -d "$directory" ]; then
-        echo "Found ${root}${directory}..."
-        continue
+        echo "Found ${directory}..."
     else 
-        echo "Creating ${root}${directory}..."
-        mkdir "${root}${directory}"
+        echo "Creating ${directory}..."
+        sudo mkdir -p "${directory}"
     fi
+    sudo chown "${user}:${user}" "${directory}"
 done
 
 url='https://raw.githubusercontent.com/ajkelsey/speedcam-st/main/'
