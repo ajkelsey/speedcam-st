@@ -70,12 +70,12 @@ function install () {
     # Create symbolic links to .service files
     echo "Creating symbolic links to service files..."
     srv_path='/etc/systemd/system'
-    sudo ln -s ${root}/systemd/speedcam.service ${srv_path}/speedcam.service
-    sudo ln -s ${root}/systemd/case_fans.service ${srv_path}/case_fans.service
+    sudo ln -s "${root}/systemd/speedcam.service" "${srv_path}/speedcam.service"
+    sudo ln -s "${root}/systemd/case_fans.service" "${srv_path}/case_fans.service"
 
     # Install python dependencies
     echo 'Installing python dependencies...'
-    sudo apt update -qq -y && sudo apt install -qq -y -o=Dpkg::Use-Pty=0 python3 python-apscheduler \
+    sudo apt update -qq -y && sudo apt install -qq -y -o=Dpkg::Use-Pty=0 python3 python3-apscheduler \
     python3-matplotlib python3-pandas python3-persist-queue python3-rich python3-pip
 
     pip install ultralytics --break-system-packages
