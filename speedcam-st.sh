@@ -28,7 +28,7 @@ echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
 echo "under certain conditions; type 'cat LICENSE' for details."
 echo -e "\n\n"
-echo "Usage: $(basename "$0") install | uninstall"
+echo -e "Usage: $(basename "$0") { install | uninstall }\n"
 
 # Check if running as root
 if [ "$(id -u)" -eq 0 ]; then
