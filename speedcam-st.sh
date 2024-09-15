@@ -29,9 +29,11 @@ echo "This is free software, and you are welcome to redistribute it"
 echo "under certain conditions; type 'cat LICENSE' for details."
 echo -e "\nUsage: $(basename "$0") { install | uninstall }\n"
 
+user=$(whoami)
+root='/opt/speedcam'
+srv_path='/etc/systemd/system'
+
 function install () {
-    user=$(whoami)
-    root='/opt/speedcam'
     path_array=("${root}" "${root}/data" "${root}/http" "${root}/imageq" "${root}/images" "${root}/log" \
                 "${root}/video" "${root}/videoq")
 
@@ -53,14 +55,13 @@ function install () {
                 "http/index.html.sample" "systemd/case_fans.service" "systemd/speedcam.service")
 
     # Download files from Github
+    echo 'Downloading files...'
     for file in "${file_array[@]}"; do
-        echo "Downloading ${file}..."
         wget -O "${root}/${file}" "${url}${file}" -q --show-progress
     done
 
     # Create symbolic links to .service files
     echo "Creating symbolic links to service files..."
-    srv_path='/etc/systemd/system'
     sudo ln -s "${root}/systemd/speedcam.service" "${srv_path}/speedcam.service"
     sudo ln -s "${root}/systemd/case_fans.service" "${srv_path}/case_fans.service"
 
@@ -71,7 +72,7 @@ function install () {
 
     pip install ultralytics --break-system-packages
 
-    echo -e "\n\nFor new installations, edit speedcam-config.json.sample and save it to speedcam-config.json"
+    echo -e "\n\nFor new installations, edit speedcam-config.json.sample and save it to speedcam-config.json\n"
 }
 
 function uninstall () {
