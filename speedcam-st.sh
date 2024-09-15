@@ -23,12 +23,11 @@ echo ' /        \  |_> >  ___/\  ___// /_/ \  \___ / __ \|  Y Y  \/        \  | 
 echo '/_______  /   __/ \___  >\___  >____ |\___  >____  /__|_|  /_______  /  |____|   '
 echo '        \/|__|        \/     \/     \/    \/     \/      \/        \/            '
 echo ''
-echo "SpeedcamST Copyright (C) 2024  Andrew Kelsey"
+echo "SpeedcamST Copyright (C) 2024 Andrew Kelsey"
 echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
 echo "under certain conditions; type 'cat LICENSE' for details."
-echo -e "\n\n"
-echo -e "Usage: $(basename "$0") { install | uninstall }\n"
+echo -e "\nUsage: $(basename "$0") { install | uninstall }\n"
 
 function install () {
     user=$(whoami)
