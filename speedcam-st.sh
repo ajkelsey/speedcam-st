@@ -65,6 +65,18 @@ function install () {
     sudo ln -s "${root}/systemd/speedcam.service" "${srv_path}/speedcam.service"
     sudo ln -s "${root}/systemd/case_fans.service" "${srv_path}/case_fans.service"
 
+    # Reload systemctl daemon and enable services
+    echo 'Reloading systemctl daemon...'
+    sudo systemctl daemon-reload
+
+    echo 'Enabling services...'
+    sudo system enable case_fans.service
+    sudo systemctl enable speedcam.service
+
+    echo 'Starting services...'
+    sudo systemctl start case_fans.service
+    sudo systemctl start speedcam.service
+
     # Install python dependencies
     echo 'Installing python dependencies...'
     sudo apt update -qq -y && sudo apt install -qq -y -o=Dpkg::Use-Pty=0 python3 python3-apscheduler \
