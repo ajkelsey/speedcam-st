@@ -28,12 +28,15 @@ echo "This program comes with ABSOLUTELY NO WARRANTY."
 echo "This is free software, and you are welcome to redistribute it"
 echo "under certain conditions; type 'cat LICENSE' for details."
 echo -e "\n\n"
+echo "Usage: $(basename "$0") install | uninstall"
 
 # Check if running as root
 if [ "$(id -u)" -eq 0 ]; then
-    echo "Do not run as root."
+    echo -e "Do not run as root.\n"
     exit
 fi
+
+
 
 function install () {
     user=$(whoami)
