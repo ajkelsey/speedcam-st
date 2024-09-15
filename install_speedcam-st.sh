@@ -54,7 +54,7 @@ file_array=("LICENSE" "README.md" "alpr.py" "camera.py" "case_fans.py" "data.py"
 # Download files from Github
 for file in "${file_array[@]}"; do
     echo "Downloading ${file}..."
-    wget -O "${file}" "${url}${file}"
+    wget -O "${root}/${file}" "${url}${file}"
 done
 
 # Create symbolic links to .service files
