@@ -3,6 +3,10 @@ import os
 import pandas as pd
 
 path = '/opt/speedcam/data/'
+speed_limit = 30
+speed_brackets = [[1, 9], [10, 14], [15, 19], [20, 24], [25, 29], [30, 34], [35, 39]]
+speed_count = [0, 0, 0, 0, 0, 0, 0]
+speed_fines = [85, 95, 105, 200, 220, 240, 269]
 
 def previous_day():
     # Get previous day.
@@ -43,10 +47,23 @@ def top_speeder(data_df):
             speeder_filename = f'{image_path}/{filename}.jpg'
     return speeder, speeder_filename
 
-if __name__ == '__main__':
+def daily_revenue():
+    daily_fines = 0
     yesterday, period = previous_day()
-    print(yesterday)
     file_list = get_file_list(period)
     data_df = ingest_data(file_list)
-    speeder, speeder_filename = top_speeder(data_df)
-    print(f'{speeder}, {speeder_filename}')
+    for i in range(len(data_df)):
+        vehicle_speed = float(data_df.loc[i, 'Speed'])
+        for j in range(len(speed_brackets)):
+            if vehicle_speed >= speed_brackets[j][0] and vehicle_speed <= speed_brackets[j][1]:
+                speed_count[j] = speed_count[j] + 1
+                continue
+    for k in range(len(speed_count)):
+        daily_fines = daily_fines + (speed_count[k] * speed_fines[k])
+    daily_fines = f'Appoximate total fines: ${daily_fines:,}'
+    return yesterday, daily_fines
+
+if __name__ == '__main__':
+    yesterday, daily_fines = daily_revenue()
+    print(yesterday)
+    print(daily_fines)
