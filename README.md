@@ -77,12 +77,6 @@ From root, unzip speedcamera.zip.</br>
 
 - GPIO 27: IR filter
 
-##### Copy:
-
-- case_fans.service to /etc/systemd/system
-
-- speedcam.service to /etc/systemd/system
-
 ##### Install:
 
 ```bash
