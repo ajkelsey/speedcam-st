@@ -105,12 +105,7 @@ pip install ultralytics --break-system-packages
   - This is for the temperature sensor.
     - Interface Options > enable 1-wire interface > reboot
 - Edit /opt/speedcam/speedcam-config.json accordingly.
-- Enable services:
-  - `sudo systemctl daemon-reload`
-  - `sudo systemctl enable speedcam`
-  - `sudo systemctl start speedcam`
-  - `sudo systemctl enable case_fans`
-  - `sudo systemctl start case_fans`
+- Check that speedcam.service and case_fans.service are enabled and started.
 
 To gain access to the Facebook API, try [this blog post](https://medium.com/nerd-for-tech/automate-facebook-posts-with-python-and-facebook-graph-api-858a03d2b142). I believe things have changed a bit since it was 	posted, but should be very helpful. Here are the notes I have for doing this. I know I struggled getting 	this right at the time and they may not be totally accurate. My script is designed to use a Facebook 	Page. You can create one using your existing account.</br>	
 
