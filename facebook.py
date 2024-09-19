@@ -222,10 +222,12 @@ def daily_speeders(PAGE_ID, ACCESS_TOKEN, street_name):
                         capture_output=True, shell=True, text=True)
 
         # Create post
+        _, daily_fines = stats.daily_revenue()
         if exists(daily_filename):
             post_url = f"https://graph.facebook.com/{API_VERSION}/{PAGE_ID}/photos"
             payload = {'access_token': ACCESS_TOKEN, 
-                    'message': f'Number of speeders on {street_name} for {yesterday}:\n',
+                    'message': f'Number of speeders on {street_name} for {yesterday}:\n' +
+                    f'{daily_fines}',
                     'published': 'true',}
             file = {'media': open(daily_filename, 'rb')}
         else:
