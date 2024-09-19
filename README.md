@@ -105,6 +105,7 @@ pip install ultralytics --break-system-packages
   - This is for the temperature sensor.
     - Interface Options > enable 1-wire interface > reboot
 - Edit /opt/speedcam/speedcam-config.json accordingly.
+- Edit stats.py variables speed_brackets and speed_fines to configure accurate fine estimation for your state. NJ is the default.
 - Check that speedcam.service and case_fans.service are enabled and started.
 
 To gain access to the Facebook API, try [this blog post](https://medium.com/nerd-for-tech/automate-facebook-posts-with-python-and-facebook-graph-api-858a03d2b142). I believe things have changed a bit since it was 	posted, but should be very helpful. Here are the notes I have for doing this. I know I struggled getting 	this right at the time and they may not be totally accurate. My script is designed to use a Facebook 	Page. You can create one using your existing account.</br>	
