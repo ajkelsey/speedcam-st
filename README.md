@@ -145,7 +145,7 @@ If the speed is above the minimum report threshold, the data is added to the dai
 
 The vehicle detection uses a persistent queue to process videos. As each video takes some time to detect, this prevents multiple videos being processed at the same time. It also allows for detection to be resilient across script shutdowns.
 
-For my setup, there is only a part of the image that is clear enough to read the license plates. For this reason, I created a detection zone at line 73 in alpr.py. The video is processed frame by frame. The frame will be checked for objects, and found objects will be checked if they are a vehicle. The vehicles are cropped from the frame using the bounding box and the labeling is applied to the image. Videos recorded from dusk to dawn are not processed because there is not enough light.
+For my setup, there is only a part of the image that is clear enough to read the license plates. For this reason, I created a detection zone at line 91 in alpr.py. The video is processed frame by frame. The frame will be checked for objects, and found objects will be checked if they are a vehicle. The vehicles are cropped from the frame using the bounding box and the labeling is applied to the image. Videos recorded from dusk to dawn are not processed because there is not enough light.
 
 Image filenames are kept in a persistent queue for posting to Facebook. A post will occur every hour and upload the images in the queue. Daily at 1 am, the Speeder of the Day is posted, and at 2 am, the chart of daily speeders is posted.
 
