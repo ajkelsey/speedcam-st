@@ -55,13 +55,19 @@ Raspberry Pi 4 or 5, 8GB RAM</br>
 ## Installation
 
 Download the installation script.</br>
-`wget https://raw.githubusercontent.com/ajkelsey/speedcam-st/main/speedcam-st.sh`
+```
+wget https://raw.githubusercontent.com/ajkelsey/speedcam-st/main/speedcam-st.sh
+```
 
 Install</br>
-`./speedcam-st.sh install`
+```
+./speedcam-st.sh install
+```
 
 Remove</br>
-`./speedcan-t.sh remove`
+```
+./speedcan-t.sh remove
+```
 
 **Be sure the following directory structure exists:**</br>
 

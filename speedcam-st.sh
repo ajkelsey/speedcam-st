@@ -99,7 +99,7 @@ function uninstall () {
 
     echo -e "\nPython dependencies were not removed."
     echo -e "Run 'sudo apt remove python3-apscheduler python3-matplotlib python3-pandas" \
-"python3-persist-queue python3-rich' and\n"\
+"python3-persist-queue python3-rich' and\n" \
 "'sudo pip uninstall ultralytics' to remove them."
 
 }
