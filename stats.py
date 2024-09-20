@@ -60,7 +60,7 @@ def daily_revenue():
                 continue
     for k in range(len(speed_count)):
         daily_fines = daily_fines + (speed_count[k] * speed_fines[k])
-    daily_fines = f'Potential total fines: ${daily_fines:,}'
+    daily_fines = f'Total potential fines: ${daily_fines:,}'
     return yesterday, daily_fines
 
 if __name__ == '__main__':
