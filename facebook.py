@@ -61,20 +61,22 @@ def init_scheduler(config, imageq):
         # Schedules post of speeding vehicles every hour.
         fb_hourly_scheduler = BackgroundScheduler()
         fb_hourly_scheduler.add_job(post_images, 'interval', 
-                                    args=(config, imageq), hours=1)
+                                    args=(config, imageq), hours=1, misfire_grace_time=None)
         fb_hourly_scheduler.start()
 
         # Schedules speeder of the day post
         fb_speeder_of_day_scheduler = BackgroundScheduler()
         fb_speeder_of_day_scheduler.add_job(speeder_of_the_day, 'cron',
-                                            args=(config['facebook']['pageid'], config['facebook']['page_token']), hour=1)
+                                            args=(config['facebook']['pageid'], 
+                                                  config['facebook']['page_token']), hour=1, 
+                                                  misfire_grace_time=None)
         fb_speeder_of_day_scheduler.start()
 
         # Schedules daily speeders post
         fb_daily_speeders_scheduler = BackgroundScheduler()
         fb_daily_speeders_scheduler.add_job(daily_speeders, 'cron',
                                             args=(config['facebook']['pageid'], config['facebook']['page_token'], 
-                                                  config['street_name']), hour=2)
+                                                  config['street_name']), hour=2, misfire_grace_time=None)
         fb_daily_speeders_scheduler.start()
 
     except Exception:
