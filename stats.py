@@ -3,7 +3,8 @@ import os
 import pandas as pd
 
 path = '/opt/speedcam/data/'
-speed_limit = 30
+speed_limit = 25
+min_fine_speed = 30 # The minimum speed to be considered for fine calculation
 speed_brackets = [[1, 9], [10, 14], [15, 19], [20, 24], [25, 29], [30, 34], [35, 39]]
 speed_count = [0, 0, 0, 0, 0, 0, 0]
 speed_fines = [85, 95, 105, 200, 220, 240, 269]
@@ -55,15 +56,15 @@ def daily_revenue():
     for i in range(len(data_df)):
         vehicle_speed = float(data_df.loc[i, 'Speed'])
         for j in range(len(speed_brackets)):
-            if vehicle_speed >= speed_brackets[j][0] and vehicle_speed <= speed_brackets[j][1]:
-                speed_count[j] = speed_count[j] + 1
-                continue
+            if vehicle_speed > min_fine_speed:
+                if vehicle_speed >= (speed_brackets[j][0] + speed_limit) and vehicle_speed <= (speed_brackets[j][1] + speed_limit):
+                    speed_count[j] = speed_count[j] + 1
+                    continue
+    print(speed_count)
     for k in range(len(speed_count)):
         daily_fines = daily_fines + (speed_count[k] * speed_fines[k])
     daily_fines = f'Total potential fines: ${daily_fines:,}'
     return yesterday, daily_fines
 
 if __name__ == '__main__':
-    yesterday, daily_fines = daily_revenue()
-    print(yesterday)
-    print(daily_fines)
+    pass
