@@ -6,7 +6,6 @@ path = '/opt/speedcam/data/'
 speed_limit = 25
 min_fine_speed = 30 # The minimum speed to be considered for fine calculation
 speed_brackets = [[1, 9], [10, 14], [15, 19], [20, 24], [25, 29], [30, 34], [35, 39]]
-speed_count = [0, 0, 0, 0, 0, 0, 0]
 speed_fines = [85, 95, 105, 200, 220, 240, 269]
 
 def previous_day():
@@ -50,6 +49,7 @@ def top_speeder(data_df):
 
 def daily_revenue():
     daily_fines = 0
+    speed_count = [0, 0, 0, 0, 0, 0, 0]
     yesterday, period = previous_day()
     file_list = get_file_list(period)
     data_df = ingest_data(file_list)
