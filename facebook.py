@@ -122,8 +122,8 @@ def post_images(config, imageq):
             except ValueError as e:
                 facebook_logger.warning(f'{e}')
                 continue
-            except requests.exceptions.ConnectionError:
-                facebook_logger.warning('Facebook connection error.')
+            except requests.exceptions.ConnectionError as e:
+                facebook_logger.warning(f'Facebook connection error: {e}')
             except requests.exceptions.HTTPError as e:
                 facebook_logger.warning(f'Facebook HTTP: {e}.')
             except requests.exceptions.RequestException as e:
@@ -149,8 +149,8 @@ def post_images(config, imageq):
                                             Facebook Response: [Code: {error_code}\tMessage: {error_msg}.]')
 
                 facebook_logger.debug(f'Facebook post completed.')
-            except requests.exceptions.ConnectionError:
-                facebook_logger.warning('Facebook connection error.')
+            except requests.exceptions.ConnectionError as e:
+                facebook_logger.warning(f'Facebook connection error: {e}')
             except requests.exceptions.HTTPError as e:
                 facebook_logger.warning(f'Facebook HTTP: {e}.')
             except requests.exceptions.RequestException as e:
@@ -200,9 +200,8 @@ def speeder_of_the_day(PAGE_ID, ACCESS_TOKEN):
                                     Facebook Response: [Code: {error_code}\tMessage: {error_msg}.]')
         print(response_dict.json())
         facebook_logger.debug(f'Speeder Of The Day post completed.')
-    except requests.exceptions.ConnectionError:
-        print('Speeder Of The Day connection error.')
-        facebook_logger.warning('Speeder Of The Day connection error.')
+    except requests.exceptions.ConnectionError as e:
+        facebook_logger.warning(f'Speeder Of The Day connection error: {e}')
     except requests.exceptions.HTTPError as e:
         print(f'Speeder Of The Day HTTP: {e}.')
         facebook_logger.warning(f'Speeder Of The Day HTTP: {e}.')
@@ -249,9 +248,9 @@ def daily_speeders(PAGE_ID, ACCESS_TOKEN, street_name):
 
         os.remove(daily_filename)
 
-    except requests.exceptions.ConnectionError:
-        print('Daily Speeders connection error.')
-        facebook_logger.warning('Daily Speeders connection error.')
+    except requests.exceptions.ConnectionError as e:
+        print(f'Daily Speeders connection error: {e}')
+        facebook_logger.warning(f'Daily Speeders connection error: {e}')
     except requests.exceptions.HTTPError as e:
         print(f'Daily Speeders HTTP: {e}.')
         facebook_logger.warning(f'Daily Speeders HTTP: {e}.')
