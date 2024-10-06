@@ -67,7 +67,7 @@ def init_scheduler(config, imageq):
         # Schedules speeder of the day post
         fb_speeder_of_day_scheduler = BackgroundScheduler()
         fb_speeder_of_day_scheduler.add_job(speeder_of_the_day, 'cron',
-                                            args=(config['facebook']['pageid'], 
+                                            args=(config['facebook']['min_speed_post'], config['facebook']['pageid'], 
                                                   config['facebook']['page_token']), hour=1, 
                                                   misfire_grace_time=None)
         fb_speeder_of_day_scheduler.start()
@@ -161,7 +161,7 @@ def post_images(config, imageq):
     except Exception:
         facebook_logger.exception('Facebook post exception has occured.')
 
-def speeder_of_the_day(PAGE_ID, ACCESS_TOKEN):
+def speeder_of_the_day(min_speed_post, PAGE_ID, ACCESS_TOKEN):
     
     try:
 
@@ -171,8 +171,12 @@ def speeder_of_the_day(PAGE_ID, ACCESS_TOKEN):
         yesterday, period = stats.previous_day()
         file_list = stats.get_file_list(period)
         data_df = stats.ingest_data(file_list)
-        speeder, speeder_filename = stats.top_speeder(data_df)
+        speeder, speeder_filename = stats.top_speeder(min_speed_post, data_df)
         
+        if speeder_filename == None:
+            facebook_logger.info(f'No top speeders found to post.')
+            return
+
         # Create post
         if exists(speeder_filename):
             post_url = f"https://graph.facebook.com/{API_VERSION}/{PAGE_ID}/photos"

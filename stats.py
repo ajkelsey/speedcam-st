@@ -35,14 +35,15 @@ def ingest_data(file_list):
         data_df = pd.concat([df, data_df], ignore_index=True)
     return data_df
 
-def top_speeder(data_df):
+def top_speeder(min_speed_post, data_df):
     # Extract fastest car.
     image_path = '/opt/speedcam/images'
     speeder = 0
+    speeder_filename = ''
     for i in range(len(data_df)):
         speed = float(data_df.loc[i, 'Speed'])
         filename = data_df.loc[i, 'Image Path']
-        if speed > speeder:
+        if speed > speeder and speed > min_speed_post:
             speeder = speed
             speeder_filename = f'{image_path}/{filename}.jpg'
     return speeder, speeder_filename
