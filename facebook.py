@@ -67,7 +67,7 @@ def init_scheduler(config, imageq):
         # Schedules speeder of the day post
         fb_speeder_of_day_scheduler = BackgroundScheduler()
         fb_speeder_of_day_scheduler.add_job(speeder_of_the_day, 'cron',
-                                            args=(config['facebook']['min_speed_post'], config['facebook']['pageid'], 
+                                            args=(config['min_speed_post'], config['facebook']['pageid'], 
                                                   config['facebook']['page_token']), hour=1, 
                                                   misfire_grace_time=None)
         fb_speeder_of_day_scheduler.start()
