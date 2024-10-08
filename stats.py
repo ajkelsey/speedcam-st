@@ -43,9 +43,10 @@ def top_speeder(min_speed_post, data_df):
     for i in range(len(data_df)):
         speed = float(data_df.loc[i, 'Speed'])
         filename = data_df.loc[i, 'Image Path']
-        if speed > speeder and speed > min_speed_post:
-            speeder = speed
-            speeder_filename = f'{image_path}/{filename}.jpg'
+        if speed > min_speed_post:
+            if speed > speeder:
+                speeder = speed
+                speeder_filename = f'{image_path}/{filename}.jpg'
     return speeder, speeder_filename
 
 def daily_revenue():
