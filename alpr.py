@@ -122,12 +122,6 @@ def detect_vehicle(videoq, imageq):
 
                                     # Crop vehicle
                                     if moving_bool is True:
-                                        ####################################
-                                        # Find the trucks
-                                        # if result.boxes.cls[i] == 7:
-                                        #     truck_filename = f'{root_path}/truck/{filename[:-5]}.jpg'
-                                        #     overlay(vehicle, truck_filename, frame)
-                                        ####################################
 
                                         cropped = frame[y1:y2, x1:x2]
                                         
@@ -140,7 +134,7 @@ def detect_vehicle(videoq, imageq):
 
                                         overlay(vehicle, image_filename, resized)
                                         alpr_logger.debug(f'DETECTED: {image_filename}, Confidence: {confidence}%')
-                                        clean_up(video_filename)
+                                        # clean_up(video_filename)
 
                                         # Add data to image queue for posting
                                         imageq.put(image_filename)
@@ -153,7 +147,7 @@ def detect_vehicle(videoq, imageq):
                             break
                 else:
                     alpr_logger.debug(f'Vehicle not detected in {video_filename}.')
-                    clean_up(video_filename)
+                    # clean_up(video_filename)
                     break
                 
             videoq.task_done()

@@ -173,9 +173,9 @@ def speeder_of_the_day(min_speed_post, PAGE_ID, ACCESS_TOKEN):
         data_df = stats.ingest_data(file_list)
         speeder, speeder_filename = stats.top_speeder(min_speed_post, data_df)
         
-        if speeder_filename == None:
-            facebook_logger.info(f'No top speeders found to post.')
-            return
+        # if speeder_filename == None:
+        #     facebook_logger.info(f'No top speeders found to post.')
+        #     return
 
         # Create post
         if exists(speeder_filename):
