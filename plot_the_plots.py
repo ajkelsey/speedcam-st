@@ -139,7 +139,7 @@ def ingest_data(file_list):
 def plot_cars_per_day(data_df, period, args):
     progress.update(task, description='Crunching data...')
     filename = period + '_cars_per_day.jpg'
-    title = 'Daily Vehicle Totals for ' + period
+    title = 'Daily Vehicle Totals for' #+ period
     xlabel = ''
     ylabel = 'Number of Cars'
     cars_per_day = {}
@@ -155,7 +155,7 @@ def plot_cars_per_day(data_df, period, args):
                 # Creates date entry if it doesn't exist.
                 cars_per_day[date] = [speed]
             if float(args.speed) > 0:
-                title = 'Daily Speeders for ' + period
+                title = 'Daily Speeders for' #+ period
                 filename = period[:7] + '_speeders_per_day.jpg'
     # Creates plot data dictionary.
     carspday_plot_data = {}
@@ -205,7 +205,7 @@ def plot_speed_bins(data_df, period, args):
         xdata.append(speed_bins[l][0])
         ydata.append(speed_bins[l][1])
     filename = f'{period}.jpg'
-    title = datetime.strptime(period, '%Y-%m-%d').strftime('%A %B %d, %Y')
+    title = 'Speed bins for'
     xlabel = 'MPH'
     ylabel = 'Number of Cars'
     plot_the_plot(period, xdata, ydata, title, xlabel, ylabel, filename, args)
@@ -243,10 +243,23 @@ def plot_cars_per_hour(data_df, period, args):
         xdata.append(hour_bins[l][0])
         ydata.append(hour_bins[l][1])
     filename = period + '_hour_bins.jpg'
-    title = 'Total Vehicles Per Hour ' + period
+    title = 'Total Vehicles Per Hour'
     xlabel = 'Time of Day'
     ylabel = 'Number of Cars'
     plot_the_plot(period, xdata, ydata, title, xlabel, ylabel, filename, args)
+
+def create_title(period_args, period):
+    if period_args == 'prevmonth':
+        period_title = datetime.strptime(period, '%Y-%m').strftime('%B %Y')
+    elif period_args == 'prevyear':
+        period_title = datetime.strptime(period, '%Y').strftime('%Y')
+    elif period_args == 'currentmonth':
+        period_title = datetime.strptime(period, '%Y-%m').strftime('%B %Y')
+    elif period_args == 'currentyear':
+        period_title = datetime.strptime(period, '%Y').strftime('%Y')
+    else:
+        period_title = datetime.strptime(period, '%Y-%m-%d').strftime('%A %B %d, %Y')
+    return period_title
 
 ### Top speeders based on plate. ###
 def top_speeders():
@@ -256,6 +269,8 @@ def plot_the_plot(period, xdata, ydata, title, xlabel, ylabel, filename, args):
     global message
     progress.update(task, description='Plotting the plot...')
     fig, ax = plt.subplots(figsize=(10, 7))
+    period_title = create_title(args.period, period)
+    title = f'{title} {period_title}'
     ax.set_title(title, fontsize=18)
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
