@@ -36,7 +36,7 @@ Raspberry Pi 4 or 5, 8GB RAM</br>
 [Round vents](https://www.amazon.com/dp/B089211YPJ/?coliid=I23TO4LJPV9P0H&colid=2QKYPFE10UPBM&psc=1&ref_=list_c_wl_lv_ov_lig_dp_it)</br>
 [Outside step up adapter (25mm-58mm)](https://www.amazon.com/gp/product/B0899BYLHD/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)</br>
 [Clear lens filter](https://www.amazon.com/gp/product/B000A84H4C/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1)</br>
-[Stepdown adapter (30mm-35mm)](https://www.amazon.com/gp/product/B089Q13T22/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)</br>
+[Stepdown adapter (30mm-25mm)](https://www.amazon.com/gp/product/B089Q13T22/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)</br>
 [Step up adapter (27mm-30mm)](https://www.amazon.com/gp/product/B0899WW7ZY/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)</br>
 [Camera shroud](https://www.amazon.com/gp/product/B0BP6KW7V8/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1)</br>
 [HQ camera](https://www.amazon.com/gp/product/B09YHN5DBY/ref=ppx_yo_dt_b_asin_title_o09_s00?ie=UTF8&psc=1)</br>
