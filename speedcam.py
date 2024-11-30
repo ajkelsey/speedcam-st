@@ -4,7 +4,6 @@ import alpr
 from apscheduler.schedulers.background import BackgroundScheduler
 import camera
 import data
-from datetime import datetime
 import facebook
 import json
 import ir_filter
@@ -12,9 +11,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from os.path import exists
-import pytz
 import radar
-from suntime import Sun, SunTimeException
 import subprocess
 import sys
 from threading import Thread
@@ -50,27 +47,6 @@ def start_logger():
     logger.addHandler(log_handler)
     return logger
 
-def is_day():
-    lat = config['lat']
-    lon = config['lon']
-    
-    try:
-        sun = Sun(lat, lon)
-        timezone = pytz.timezone(config['timezone'])
-
-        now = datetime.now().strftime('%H:%M')
-
-        sunrise = sun.get_sunrise_time().astimezone(timezone).strftime('%H:%M')
-        sunset = sun.get_sunset_time().astimezone(timezone).strftime('%H:%M')
-
-        if now > sunrise and now < sunset:
-            return True
-        else:
-            return False
-
-    except SunTimeException as e:
-        logger.warning(f'{e}')
-
 ####################################################################################################
 
 if __name__ == '__main__':
@@ -99,7 +75,7 @@ if __name__ == '__main__':
     while True:
         try:
             # Checks if daylight, actuates ir cut filter, sets day flag
-            if is_day():
+            if camera.is_day(config):
                 is_day_flag = True
                 ir_filter.on()
             else:
@@ -120,15 +96,10 @@ if __name__ == '__main__':
                 if (vehicle.speed > float(config['min_speed_post'])):
 
                     # Loads alpr file queue with video filename.
-                    if is_day_flag:
+                    if filename != 'unknown':
                         videoq.put(vehicle)
                         videoq.put(filename)
                         videoq.task_done()
-                    else:
-                        # Removes video if at night.
-                        if exists(filename):
-                            os.remove(filename)
-                            logger.debug(f'{filename} removed. Not daytime.')
                 else:
                     # Removes video for vehicles below fb post threshold.
                     if exists(filename):

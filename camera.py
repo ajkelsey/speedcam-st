@@ -16,13 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
+from datetime import datetime
 import logging
 import os
 from os.path import exists
 from picamera2 import Picamera2
 from picamera2.encoders import H264Encoder
 from picamera2.outputs import CircularOutput
+import pytz
 import subprocess
+from suntime import Sun, SunTimeException
 import time
 
 def init(config):
@@ -75,3 +78,24 @@ def stop_video(config, filename):
 
 def shutdown():
     picam.stop_recording()
+
+def is_day(config):
+    lat = config['lat']
+    lon = config['lon']
+    
+    try:
+        sun = Sun(lat, lon)
+        timezone = pytz.timezone(config['timezone'])
+
+        now = datetime.now().strftime('%H:%M')
+
+        sunrise = sun.get_sunrise_time().astimezone(timezone).strftime('%H:%M')
+        sunset = sun.get_sunset_time().astimezone(timezone).strftime('%H:%M')
+
+        if now > sunrise and now < sunset:
+            return True
+        else:
+            return False
+
+    except SunTimeException as e:
+        camera_logger.warning(f'{e}')
