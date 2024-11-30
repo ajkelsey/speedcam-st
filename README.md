@@ -36,7 +36,7 @@ Raspberry Pi 4 or 5, 8GB RAM</br>
 [Round vents](https://www.amazon.com/dp/B089211YPJ/?coliid=I23TO4LJPV9P0H&colid=2QKYPFE10UPBM&psc=1&ref_=list_c_wl_lv_ov_lig_dp_it)</br>
 [Outside step up adapter (25mm-58mm)](https://www.amazon.com/gp/product/B0899BYLHD/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)</br>
 [Clear lens filter](https://www.amazon.com/gp/product/B000A84H4C/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1)</br>
-[Stepdown adapter (30mm-35mm)](https://www.amazon.com/gp/product/B089Q13T22/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)</br>
+[Stepdown adapter (30mm-25mm)](https://www.amazon.com/gp/product/B089Q13T22/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)</br>
 [Step up adapter (27mm-30mm)](https://www.amazon.com/gp/product/B0899WW7ZY/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1)</br>
 [Camera shroud](https://www.amazon.com/gp/product/B0BP6KW7V8/ref=ppx_yo_dt_b_asin_title_o04_s00?ie=UTF8&psc=1)</br>
 [HQ camera](https://www.amazon.com/gp/product/B09YHN5DBY/ref=ppx_yo_dt_b_asin_title_o09_s00?ie=UTF8&psc=1)</br>
@@ -145,7 +145,7 @@ If the speed is above the minimum report threshold, the data is added to the dai
 
 The vehicle detection uses a persistent queue to process videos. As each video takes some time to detect, this prevents multiple videos being processed at the same time. It also allows for detection to be resilient across script shutdowns.
 
-For my setup, there is only a part of the image that is clear enough to read the license plates. For this reason, I created a detection zone at line 73 in alpr.py. The video is processed frame by frame. The frame will be checked for objects, and found objects will be checked if they are a vehicle. The vehicles are cropped from the frame using the bounding box and the labeling is applied to the image. Videos recorded from dusk to dawn are not processed because there is not enough light.
+For my setup, there is only a part of the image that is clear enough to read the license plates. For this reason, I created a detection zone at line 91 in alpr.py. The video is processed frame by frame. The frame will be checked for objects, and found objects will be checked if they are a vehicle. The vehicles are cropped from the frame using the bounding box and the labeling is applied to the image. Videos recorded from dusk to dawn are not processed because there is not enough light.
 
 Image filenames are kept in a persistent queue for posting to Facebook. A post will occur every hour and upload the images in the queue. Daily at 1 am, the Speeder of the Day is posted, and at 2 am, the chart of daily speeders is posted.
 

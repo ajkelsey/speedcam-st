@@ -90,7 +90,7 @@ def detect_vehicle(videoq, imageq):
 
                     # Established detection zone
                     detect_zone_l = int(orig_w / 3.5)
-                    detect_zone_r = orig_w / 2
+                    detect_zone_r = (orig_w / 2) - 300
                     detect_zone_t = orig_h / 3
                     
                     # Checks if there is a detected obj

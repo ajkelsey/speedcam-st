@@ -74,7 +74,7 @@ def stop_video(config, filename):
             print('Video file size is 0.')
             camera_logger.warning('Video file size is 0.')
             camera_logger.warning('Restarting daemon...')
-            subprocess.run('sudo systemctl restart speedcam', capture_output=True, shell=True, text=True)
+            subprocess.run('sudo systemctl reboot -i', capture_output=True, shell=True, text=True)
 
 def shutdown():
     picam.stop_recording()

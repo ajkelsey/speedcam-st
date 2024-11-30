@@ -61,20 +61,22 @@ def init_scheduler(config, imageq):
         # Schedules post of speeding vehicles every hour.
         fb_hourly_scheduler = BackgroundScheduler()
         fb_hourly_scheduler.add_job(post_images, 'interval', 
-                                    args=(config, imageq), hours=1)
+                                    args=(config, imageq), hours=1, misfire_grace_time=None)
         fb_hourly_scheduler.start()
 
         # Schedules speeder of the day post
         fb_speeder_of_day_scheduler = BackgroundScheduler()
         fb_speeder_of_day_scheduler.add_job(speeder_of_the_day, 'cron',
-                                            args=(config['facebook']['pageid'], config['facebook']['page_token']), hour=1)
+                                            args=(config['min_speed_post'], config['facebook']['pageid'], 
+                                                  config['facebook']['page_token']), hour=1, 
+                                                  misfire_grace_time=None)
         fb_speeder_of_day_scheduler.start()
 
         # Schedules daily speeders post
         fb_daily_speeders_scheduler = BackgroundScheduler()
         fb_daily_speeders_scheduler.add_job(daily_speeders, 'cron',
                                             args=(config['facebook']['pageid'], config['facebook']['page_token'], 
-                                                  config['street_name']), hour=2)
+                                                  config['street_name']), hour=2, misfire_grace_time=None)
         fb_daily_speeders_scheduler.start()
 
     except Exception:
@@ -120,8 +122,8 @@ def post_images(config, imageq):
             except ValueError as e:
                 facebook_logger.warning(f'{e}')
                 continue
-            except requests.exceptions.ConnectionError:
-                facebook_logger.warning('Facebook connection error.')
+            except requests.exceptions.ConnectionError as e:
+                facebook_logger.warning(f'Facebook connection error: {e}')
             except requests.exceptions.HTTPError as e:
                 facebook_logger.warning(f'Facebook HTTP: {e}.')
             except requests.exceptions.RequestException as e:
@@ -147,8 +149,8 @@ def post_images(config, imageq):
                                             Facebook Response: [Code: {error_code}\tMessage: {error_msg}.]')
 
                 facebook_logger.debug(f'Facebook post completed.')
-            except requests.exceptions.ConnectionError:
-                facebook_logger.warning('Facebook connection error.')
+            except requests.exceptions.ConnectionError as e:
+                facebook_logger.warning(f'Facebook connection error: {e}')
             except requests.exceptions.HTTPError as e:
                 facebook_logger.warning(f'Facebook HTTP: {e}.')
             except requests.exceptions.RequestException as e:
@@ -159,7 +161,7 @@ def post_images(config, imageq):
     except Exception:
         facebook_logger.exception('Facebook post exception has occured.')
 
-def speeder_of_the_day(PAGE_ID, ACCESS_TOKEN):
+def speeder_of_the_day(min_speed_post, PAGE_ID, ACCESS_TOKEN):
     
     try:
 
@@ -169,8 +171,12 @@ def speeder_of_the_day(PAGE_ID, ACCESS_TOKEN):
         yesterday, period = stats.previous_day()
         file_list = stats.get_file_list(period)
         data_df = stats.ingest_data(file_list)
-        speeder, speeder_filename = stats.top_speeder(data_df)
+        speeder, speeder_filename = stats.top_speeder(min_speed_post, data_df)
         
+        if speeder_filename == None:
+            facebook_logger.info(f'No top speeders found to post.')
+            return
+
         # Create post
         if exists(speeder_filename):
             post_url = f"https://graph.facebook.com/{API_VERSION}/{PAGE_ID}/photos"
@@ -198,9 +204,8 @@ def speeder_of_the_day(PAGE_ID, ACCESS_TOKEN):
                                     Facebook Response: [Code: {error_code}\tMessage: {error_msg}.]')
         print(response_dict.json())
         facebook_logger.debug(f'Speeder Of The Day post completed.')
-    except requests.exceptions.ConnectionError:
-        print('Speeder Of The Day connection error.')
-        facebook_logger.warning('Speeder Of The Day connection error.')
+    except requests.exceptions.ConnectionError as e:
+        facebook_logger.warning(f'Speeder Of The Day connection error: {e}')
     except requests.exceptions.HTTPError as e:
         print(f'Speeder Of The Day HTTP: {e}.')
         facebook_logger.warning(f'Speeder Of The Day HTTP: {e}.')
@@ -226,7 +231,7 @@ def daily_speeders(PAGE_ID, ACCESS_TOKEN, street_name):
         if exists(daily_filename):
             post_url = f"https://graph.facebook.com/{API_VERSION}/{PAGE_ID}/photos"
             payload = {'access_token': ACCESS_TOKEN, 
-                    'message': f'Number of speeders on {street_name} for {yesterday}:\n' +
+                    'message': f'Number of speeders on {street_name} for {yesterday}.\n\n' +
                     f'{daily_fines}',
                     'published': 'true',}
             file = {'media': open(daily_filename, 'rb')}
@@ -247,9 +252,9 @@ def daily_speeders(PAGE_ID, ACCESS_TOKEN, street_name):
 
         os.remove(daily_filename)
 
-    except requests.exceptions.ConnectionError:
-        print('Daily Speeders connection error.')
-        facebook_logger.warning('Daily Speeders connection error.')
+    except requests.exceptions.ConnectionError as e:
+        print(f'Daily Speeders connection error: {e}')
+        facebook_logger.warning(f'Daily Speeders connection error: {e}')
     except requests.exceptions.HTTPError as e:
         print(f'Daily Speeders HTTP: {e}.')
         facebook_logger.warning(f'Daily Speeders HTTP: {e}.')
