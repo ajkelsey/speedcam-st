@@ -49,7 +49,8 @@ def init(config):
         radar_logger.error('Could not locate radar. System retsarting...')
         speedcam.restart()
     except Exception:
-        radar_logger.exception('Serial connection exception has occured.')
+        radar_logger.exception('Serial connection exception has occured. System restarting...')
+        speedcam.restart()
     radar.write("AX\n".encode('utf-8'))
     time.sleep(1)
     for key in config['radar']['settings']:
