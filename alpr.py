@@ -122,12 +122,6 @@ def detect_vehicle(videoq, imageq):
 
                                     # Crop vehicle
                                     if moving_bool is True:
-                                        ####################################
-                                        # Find the trucks
-                                        # if result.boxes.cls[i] == 7:
-                                        #     truck_filename = f'{root_path}/truck/{filename[:-5]}.jpg'
-                                        #     overlay(vehicle, truck_filename, frame)
-                                        ####################################
 
                                         cropped = frame[y1:y2, x1:x2]
                                         
