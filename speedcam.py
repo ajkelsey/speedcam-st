@@ -28,11 +28,6 @@ def get_config():
     return config
 
 def init_scheduler():
-
-    def restart():
-            logger.info('Daily restart...')
-            subprocess.run('sudo systemctl reboot -i', capture_output=True, shell=True, text=True)
-                         
     daily_reboot_scheduler = BackgroundScheduler()
     daily_reboot_scheduler.add_job(restart, 'cron', hour=3, misfire_grace_time=None)
     daily_reboot_scheduler.start()
@@ -46,6 +41,27 @@ def start_logger():
     log_handler.setFormatter(logformat)
     logger.addHandler(log_handler)
     return logger
+
+def is_day():
+    lat = config['lat']
+    lon = config['lon']
+    
+    try:
+        sun = Sun(lat, lon)
+        timezone = pytz.timezone(config['timezone'])
+
+        now = datetime.now().strftime('%H:%M')
+
+        sunrise = sun.get_sunrise_time().astimezone(timezone).strftime('%H:%M')
+        sunset = sun.get_sunset_time().astimezone(timezone).strftime('%H:%M')
+
+        if now > sunrise and now < sunset:
+            return True
+        else:
+            return False
+
+    except SunTimeException as e:
+        logger.warning(f'{e}')
 
 ####################################################################################################
 

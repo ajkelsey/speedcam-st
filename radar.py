@@ -21,6 +21,7 @@ from datetime import datetime
 import json
 import logging
 import serial
+import speedcam
 import time
 from threading import Thread
 from vehicle import Vehicle
@@ -44,8 +45,12 @@ def init(config):
     global radar
     try:
         radar = serial.Serial(config['radar']['device_path'],9600, timeout=1)
+    except FileNotFoundError:
+        radar_logger.error('Could not locate radar. System retsarting...')
+        speedcam.restart()
     except Exception:
-        radar_logger.exception('Serial connection exception has occured.')
+        radar_logger.exception('Serial connection exception has occured. System restarting...')
+        speedcam.restart()
     radar.write("AX\n".encode('utf-8'))
     time.sleep(1)
     for key in config['radar']['settings']:
