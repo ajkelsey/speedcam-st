@@ -86,9 +86,10 @@ def get_speed(config):
         while radar.in_waiting > 0:
             
             # Begins video record.
-            if p_flag == False:
-                filename = camera.start_video(config, vehicle.file_date)
-                p_flag = True
+            if camera.is_day(config):
+                if p_flag == False:
+                    filename = camera.start_video(config, vehicle.file_date)
+                    p_flag = True
             
             spd = []
             spd = [None, None]
@@ -98,13 +99,14 @@ def get_speed(config):
             if "speed" in buffer:
                 spd[1] = buffer['speed']
             
-            # Appends spd_rng to accumulator.
+            # Appends spd to accumulator.
             if (spd[1] != None):
                 avg_speed.append(spd)
     
     # Stop recording video
-    cam_thread = Thread(target=camera.stop_video(config, filename), daemon=True)
-    cam_thread.start()
+    if camera.is_day(config):
+        cam_thread = Thread(target=camera.stop_video(config, filename), daemon=True)
+        cam_thread.start()
 
     # Determines average speed.
     if len(avg_speed) > 0 and (p_flag == True):
