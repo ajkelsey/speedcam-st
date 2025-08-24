@@ -28,6 +28,10 @@ def get_config():
     return config
 
 def init_scheduler():
+    def restart():
+            logger.info('Daily restart...')
+            subprocess.run('sudo systemctl reboot -i', capture_output=True, shell=True, text=True)
+                         
     daily_reboot_scheduler = BackgroundScheduler()
     daily_reboot_scheduler.add_job(restart, 'cron', hour=3, misfire_grace_time=None)
     daily_reboot_scheduler.start()
