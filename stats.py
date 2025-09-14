@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import os
+from os.path import exists
 import pandas as pd
 
 path = '/opt/speedcam/data/'
@@ -43,7 +44,7 @@ def top_speeder(min_speed_post, data_df):
     for i in range(len(data_df)):
         speed = float(data_df.loc[i, 'Speed'])
         filename = data_df.loc[i, 'Image Path']
-        if speed > float(min_speed_post):
+        if speed > float(min_speed_post) and exists(filename) == True:
             if speed > speeder:
                 speeder = speed
                 speeder_filename = f'{image_path}/{filename}.jpg'

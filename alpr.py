@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 
-from apscheduler.schedulers.background import BackgroundScheduler
 import cv2
 import logging
 import os
