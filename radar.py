@@ -114,7 +114,7 @@ def get_speed(config):
         cam_thread.start()
 
     # Determines average speed.
-    if len(avg_speed) > 0 and (p_flag == True):
+    if len(avg_speed) > 0:
         
         for index in range(len(avg_speed)):
             vehicle_speed += float(avg_speed[index][1])
