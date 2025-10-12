@@ -21,7 +21,7 @@ from datetime import datetime
 import json
 import logging
 import serial
-import speedcam
+import subprocess
 import time
 from threading import Thread
 from vehicle import Vehicle
@@ -43,14 +43,18 @@ def get_milli_time():
 
 def init(config):
     global radar
+    def restart():
+            radar_logger.info('Radar init failed. Restarting...')
+            subprocess.run('sudo systemctl reboot -i', capture_output=True, shell=True, text=True)
+
     try:
         radar = serial.Serial(config['radar']['device_path'],9600, timeout=1)
     except FileNotFoundError:
         radar_logger.error('Could not locate radar. System retsarting...')
-        speedcam.restart()
+        restart()
     except Exception:
         radar_logger.exception('Serial connection exception has occured. System restarting...')
-        speedcam.restart()
+        restart()
     radar.write("AX\n".encode('utf-8'))
     time.sleep(1)
     for key in config['radar']['settings']:
